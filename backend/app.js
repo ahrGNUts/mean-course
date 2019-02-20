@@ -1,7 +1,20 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
+const mongoose = require('mongoose');
+const uri = "mongodb+srv://meanuser:er8YrIrEDJFETQae@cluster0-41u2j.mongodb.net/test?retryWrites=true"
+
+const Post = require('./models/post');
+
 const app = express(); // create express app
+
+mongoose.connect(uri, { useNewUrlParser: true })
+  .then(() => {
+    console.log('Connected to database!');
+  })
+  .catch(() => {
+    console.log('Connection failed!');
+  });
 
 app.use(bodyParser.json());
 //app.use(bodyParser.urlencoded({ extended: false })); // can also use this as an alternative to the line above
@@ -20,7 +33,10 @@ app.use((req, res, next) => {
 });
 
 app.post('/api/posts', (req, res, next) => {
-  const post = req.body;
+  const post = new Post({
+    title: req.body.title,
+    content: req.body.content
+  });
   console.log(post);
   res.status(201).json({
     message: 'post added sucessfully.'
