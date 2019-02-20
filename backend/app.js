@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const mongoose = require('mongoose');
-const uri = "mongodb+srv://meanuser:er8YrIrEDJFETQae@cluster0-41u2j.mongodb.net/test?retryWrites=true"
+const uri = "mongodb+srv://meanuser:er8YrIrEDJFETQae@cluster0-41u2j.mongodb.net/node-angular?retryWrites=true"
 
 const Post = require('./models/post');
 
@@ -37,28 +37,18 @@ app.post('/api/posts', (req, res, next) => {
     title: req.body.title,
     content: req.body.content
   });
-  console.log(post);
+  post.save();
   res.status(201).json({
     message: 'post added sucessfully.'
   });
 });
 
-app.use('/api/posts', (req, res, next) => {
-  const posts = [
-    {
-      id: 'alksdjlaksf',
-      title: 'first server-side post',
-      content: 'this is coming from the server'
-    },
-    {
-      id: 'ytekrt85',
-      title: 'second server-side post',
-      content: 'this is also coming from the server'
-    }
-  ];
-  res.status(200).json({
-    message: 'Posts fetched successfully',
-    posts: posts
+app.get('/api/posts', (req, res, next) => {
+  Post.find().then(documents => {
+    res.status(200).json({
+      message: 'Posts fetched successfully',
+      posts: documents
+    });
   });
 });
 
