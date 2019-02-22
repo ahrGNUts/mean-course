@@ -21,6 +21,7 @@ router.post('', (req, res, next) => {
 
 router.put('/:id', (req, res, next) => {
   const post = new Post({
+    _id: req.body.id,
     title: req.body.title,
     content: req.body.content
   });
