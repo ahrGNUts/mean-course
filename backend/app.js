@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const uri = "mongodb+srv://meanuser:er8YrIrEDJFETQae@cluster0-41u2j.mongodb.net/node-angular?retryWrites=true"
 
 const postsRoutes = require('./routes/posts');
+const userRoutes = require('./routes/user');
 
 const app = express(); // create express app
 
@@ -35,5 +36,6 @@ app.use((req, res, next) => {
 });
 
 app.use('/api/posts', postsRoutes);
+app.use('/api/user', userRoutes);
 
 module.exports = app;
